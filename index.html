@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniverse — Modern Anime Streaming</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass-header">
+        <div class="header-left">
+            <button id="menu-toggle" class="icon-btn"><i class="fas fa-bars"></i></button>
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <span class="logo-text">Aniverse</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-pill">
+                <i class="fas fa-search"></i>
+                <input type="text" id="header-search" placeholder="Search anime...">
+                <button id="filter-btn" class="icon-btn"><i class="fas fa-sliders-h"></i></button>
+                <div id="search-dropdown" class="search-results-dropdown hidden"></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button id="shuffle-btn" class="icon-btn" title="Random Anime"><i class="fas fa-random"></i></button>
+            <button id="sync-btn" class="icon-btn" title="Sync Library"><i class="fas fa-sync-alt"></i></button>
+            <button id="settings-btn" class="icon-btn" title="Settings"><i class="fas fa-cog"></i></button>
+        </div>
+    </header>
+
+    <!-- Side Menu -->
+    <aside id="side-menu" class="side-menu">
+        <div class="menu-content">
+            <section>
+                <h3>Browse</h3>
+                <nav>
+                    <a href="#" data-view="home" class="active"><i class="fas fa-home"></i> Home</a>
+                    <a href="#" data-view="ongoing"><i class="fas fa-play-circle"></i> Ongoing</a>
+                    <a href="#" data-view="new"><i class="fas fa-plus-square"></i> New Releases</a>
+                    <a href="#" data-view="library"><i class="fas fa-bookmark"></i> My Library</a>
+                </nav>
+            </section>
+            <section>
+                <h3>Genres</h3>
+                <div class="genre-grid" id="menu-genres"></div>
+            </section>
+            <section>
+                <h3>A-Z List</h3>
+                <div class="az-grid" id="menu-az"></div>
+            </section>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg" id="hero-banner"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="badge">FREE ANIME STREAMING</span>
+                <h1 class="gradient-text">Welcome to Aniverse</h1>
+                <p>Stream your favorite anime in 1080p with no ads. The most modern anime library on the web.</p>
+                <div class="hero-search">
+                    <input type="text" id="hero-search-input" placeholder="What are you looking for?">
+                    <button id="hero-search-btn">Search</button>
+                </div>
+                <div class="popular-tags">
+                    <span>Popular:</span>
+                    <a href="#">One Piece</a>
+                    <a href="#">Jujutsu Kaisen</a>
+                    <a href="#">Demon Slayer</a>
+                    <a href="#">Solo Leveling</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Content Sections -->
+        <div id="content-sections">
+            <section class="content-row" id="trending-section">
+                <div class="row-header">
+                    <h2>Trending Now</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="card-carousel" id="trending-carousel"></div>
+            </section>
+
+            <section class="content-row" id="recent-section">
+                <div class="row-header">
+                    <h2>Recently Updated</h2>
+                </div>
+                <div class="card-grid" id="recent-grid"></div>
+            </section>
+
+            <section class="content-row" id="ongoing-section">
+                <div class="row-header">
+                    <h2>Ongoing Anime <span class="live-pulse">LIVE</span></h2>
+                </div>
+                <div class="card-grid" id="ongoing-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-az">
+            <div class="az-list" id="footer-az"></div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <div class="logo-icon">A</div>
+                <span>Aniverse</span>
+            </div>
+            <p class="copyright">&copy; 2026 Aniverse. All rights reserved.</p>
+            <p class="disclaimer">This site does not store any files on its server. All contents are provided by non-affiliated third parties.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="watch-modal" class="modal hidden">
+        <div class="modal-content watch-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div id="anime-detail-view"></div>
+        </div>
+    </div>
+
+    <div id="filter-modal" class="modal hidden">
+        <div class="modal-content filter-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <h2>Advanced Filter</h2>
+            <form id="filter-form">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label>Type</label>
+                        <select name="type">
+                            <option value="">All</option>
+                            <option value="tv">TV Series</option>
+                            <option value="movie">Movie</option>
+                            <option value="ova">OVA</option>
+                            <option value="ona">ONA</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select name="status">
+                            <option value="">All</option>
+                            <option value="airing">Airing</option>
+                            <option value="complete">Completed</option>
+                            <option value="upcoming">Upcoming</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Rating</label>
+                        <select name="rating">
+                            <option value="">All</option>
+                            <option value="g">G</option>
+                            <option value="pg">PG</option>
+                            <option value="pg13">PG-13</option>
+                            <option value="r17">R-17</option>
+                            <option value="r">R+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Score</label>
+                        <select name="score">
+                            <option value="">All</option>
+                            <option value="9">9+</option>
+                            <option value="8">8+</option>
+                            <option value="7">7+</option>
+                            <option value="6">6+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Genres</label>
+                    <div class="genre-pills-select" id="filter-genres"></div>
+                </div>
+                <button type="submit" class="apply-btn">Apply Filters</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content settings-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <h2>Settings</h2>
+            <div class="settings-form">
+                <div class="setting-item">
+                    <label>StreamP2P API Key</label>
+                    <input type="password" id="setting-api-key" value="46d3af3546d3931092a5b078">
+                </div>
+                <div class="setting-item">
+                    <label>Default Sub Type</label>
+                    <select id="setting-sub-type">
+                        <option value="soft">Soft Sub</option>
+                        <option value="hard">Hard Sub</option>
+                        <option value="dub">English Dub</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>Data Source</label>
+                    <select id="setting-data-source">
+                        <option value="mal">MyAnimeList</option>
+                        <option value="anilist">AniList</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <div class="setting-item toggle">
+                    <label>Auto-Monitor Ongoing</label>
+                    <input type="checkbox" id="setting-auto-monitor" checked>
+                </div>
+                <div class="setting-item toggle">
+                    <label>Auto-Sync on Load</label>
+                    <input type="checkbox" id="setting-auto-sync" checked>
+                </div>
+                <button id="save-settings" class="apply-btn">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
