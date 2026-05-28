@@ -1,0 +1,39 @@
+name: Aniverse Pipeline
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily
+  workflow_dispatch:
+    inputs:
+      anime_title:
+        description: 'Anime Title to Process'
+        required: true
+        default: 'One Piece'
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg aria2
+          pip install requests
+
+      - name: Run Pipeline
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            python master_pipeline.py "${{ github.event.inputs.anime_title }}"
+          else
+            # Process titles from file if scheduled
+            while read p; do
+              python master_pipeline.py "$p"
+            done < anime_titles.txt
+          fi
